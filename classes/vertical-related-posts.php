@@ -1,11 +1,11 @@
 <?php
 	/**
 	 *	Plugin Name: Vertical Related Posts
-	 *	Plugin URI: http://uncover-romania.com/
+	 *	Plugin URI: https://github.com/corneliucirlan/vertical-related-posts
 	 *	Description: Vertical Related Posts created specially for Uncover Romania's website.
 	 *	Author: Corneliu C&icirc;rlan
 	 *	License: GPLv2 or later
-	 *	Version: 1.0
+	 *	Version: 1.0.0
 	 *	Author URI: https://linkedin.com/in/corneliucirlan
 	 */
 	
