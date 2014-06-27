@@ -1,11 +1,11 @@
 <?php
-	/*
+	/**
 	 *	Plugin Name: Vertical Related Posts
-	 *	Plugin URI: http://www.uncover-romania.com/
+	 *	Plugin URI: https://github.com/corneliucirlan/vertical-related-posts
 	 *	Description: Vertical Related Posts created specially for Uncover Romania's website.
 	 *	Author: Corneliu C&icirc;rlan
 	 *	License: GPLv2 or later
-	 *	Version: 1.0
+	 *	Version: 1.0.0
 	 *	Author URI: https://linkedin.com/in/corneliucirlan
 	 */
 	
@@ -38,8 +38,10 @@
 				 * Load custom CSS for options page
 				 */
 				add_action('admin_init', function() {
-					wp_register_style('admin-vrp', VRP_URI.'/admin/css/admin-vrp.css', array(), VRP_VERSION);
+					wp_register_style('admin-vrp', VRP_URI.'/css/admin-vrp.css', array(), VRP_VERSION);
 					wp_enqueue_style('admin-vrp');
+
+					wp_enqueue_script('vrp-metabox-jquery', VRP_URI.'/js/admin-vrp.js', array('jquery'), VRP_VERSION);
 				});
 			}
 
@@ -94,14 +96,6 @@
 			    	</div>
 			    	<span>Enable custom post types&nbsp;&nbsp;&nbsp;</span>
 			    </p>
-
-			    <script>
-			    	jQuery(document).ready(function(){
-						jQuery('#customPostTypesToUse').click(function(){
-					        jQuery('.customPostTypesToUse').slideToggle();
-						});
-					});
-			    </script>
 
 			    <p>
 			    	<label class="customPostTypesToUse" <?php if ($checked == "off") echo "style='display: none;'"; ?>>Post Types to use</label>

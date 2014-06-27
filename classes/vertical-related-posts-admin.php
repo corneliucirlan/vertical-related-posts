@@ -1,7 +1,7 @@
 <?php
 	/**
 	 *	Plugin Name: Vertical Related Posts
-	 *	Plugin URI: http://www.uncover-romania.com/
+	 *	Plugin URI: https://github.com/corneliucirlan/vertical-related-posts
 	 *	Description: Vertical Related Posts created specially for Uncover Romania's website.
 	 *	Author: Corneliu C&icirc;rlan
 	 *	License: GPLv2 or later
@@ -54,8 +54,10 @@
 				 */
 				add_action('admin_init', function() {
 					if (is_admin()):
-						wp_register_style('admin-vrp', VRP_URI.'/css/admin-vrp.css', array(), VRP_VERSION);
+						wp_register_style('admin-vrp', VRP_URI.'css/admin-vrp.css', array(), VRP_VERSION);
 						wp_enqueue_style('admin-vrp');
+
+						wp_enqueue_script('vrp-metabox-jquery', VRP_URI.'js/admin-vrp.js', array('jquery'), VRP_VERSION);
 					endif;
 				});
 			}
@@ -68,7 +70,7 @@
 			/**
 			 * Check the database for any changes made and updates it if found any
 			 */
-			function vrp_version_check()
+			public function vrp_version_check()
 			{
 				$default = get_option('cc_vrp_options');
 
@@ -76,10 +78,10 @@
 				if (!array_key_exists('version', $this->cc_vrp_options)) $default['version'] = VRP_VERSION; else $default['version'] = VRP_VERSION;
 				if (!array_key_exists('relatedPostsTitle', $this->cc_vrp_options)) $default['relatedPostsTitle'] = VRP_TITLE;
 				if (!array_key_exists('defaultNumberOfPosts', $this->cc_vrp_options)) $default['defaultNumberOfPosts'] = VRP_NUMBER_OF_POSTS;
-				if (!array_key_exists('loadDefaultCss', $this->cc_vrp_options)) $default['loadDefaultCss'] = VRP_DEFAULT_CSS;
 				if (!array_key_exists('fillWithRandomPosts', $this->cc_vrp_options)) $default['fillWithRandomPosts'] = VRP_FILL_WITH_RANDOM_POSTS;
 				if (!array_key_exists('checkedPostTypes', $this->cc_vrp_options)) $default['checkedPostTypes'] = VRP_CHECKED_POST_TYPES;
 				if (!array_key_exists('featuredImageSize', $this->cc_vrp_options)) $default['featuredImageSize'] = VRP_FEATURED_SIZE;
+				if (!array_key_exists('loadDefaultCSS', $this->cc_vrp_options) )$default['loadDefaultCSS'] = VRP_DEFAULT_CSS;
 
 				// update database with
 				update_option('cc_vrp_options', $default);
@@ -88,7 +90,7 @@
 			/**
 			 * Activate the plugin, set up the settings required on the settings page
 			 */
-			function activation() 
+			public function activation() 
 			{
 				// If our option is not stored, add it to the database and output our welcome message
 				if (!get_option( 'cc_vrp_activate_flag'))
@@ -103,6 +105,7 @@
 				$default['fillWithRandomPosts'] = VRP_FILL_WITH_RANDOM_POSTS;
 				$default['checkedPostTypes'] = VRP_CHECKED_POST_TYPES;
 				$default['featuredImageSize'] = VRP_FEATURED_SIZE;
+				$default['loadDefaultCSS'] = VRP_DEFAULT_CSS;
 
 				// Store default plugin settings
 				add_option('cc_vrp_options', $default);
@@ -111,7 +114,7 @@
 			/**
 			 * This function outputs an activation message if the activation flag was just set.
 			 */
-			function admin_notices()
+			public function admin_notices()
 			{
 				// If our option is set to true, user just activated the plugin.
 				if (get_option('cc_vrp_activate_flag')):
@@ -127,7 +130,7 @@
 			/**
 			 * Clean up on deactivating the plugin
 			 */
-			function deactivation()
+			public function deactivation()
 			{
 				delete_option('cc_vrp_activate_flag');
 			}
@@ -152,14 +155,12 @@
 				register_setting('cc_vrp_options', 'cc_vrp_options', array($this, 'cc_vrp_validate'));
 
 				/*
-				 * Add General Settings section
+				 * Add Settings sections
 				 * id, title, cb, wwich page
 				 */
 				add_settings_section('cc_vrp_general_section', 'General', array($this, 'setVRPGeneralSettings'), 'vertical-related-posts-options');
-
 				add_settings_section('cc_vrp_posttypes_section', 'Post Types', array($this, 'setVRPTypesSection'), 'vertical-related-posts-options');
-
-				add_settings_section('cc_vrp_customcss_section', 'Custom CSS', array($this, 'setVRPCustomCSS'), 'vertical-related-posts-options');
+				add_settings_section('cc_vrp_customcss_section', 'Stylesheet', array($this, 'setVRPCustomCSS'), 'vertical-related-posts-options');
 				
 				/*
 				 * Add settings fields
@@ -171,9 +172,6 @@
 				// Number of Posts
 				add_settings_field('cc_vrp_postsnumber', 'Number of Posts', array($this, 'getVRPNumberOfPosts'), 'vertical-related-posts-options', 'cc_vrp_general_section', $this->cc_vrp_options['defaultNumberOfPosts']);
 			
-				// Load default stylesheet
-				add_settings_field('cc_vrp_defaultstylesheet', 'Default Stylesheet', array($this, 'getVRPDefaultStylesheet'), 'vertical-related-posts-options', 'cc_vrp_general_section', $this->cc_vrp_options['loadDefaultCss']);
-			
 				// Fill with random posts
 				add_settings_field('cc_vrp_fillrandomposts', 'Fill with random posts', array($this, 'getVRPFillRandom'), 'vertical-related-posts-options', 'cc_vrp_general_section', $this->cc_vrp_options['fillWithRandomPosts']);
 
@@ -184,7 +182,7 @@
 				add_settings_field('cc_vrp_posttypes', 'Post Types', array($this, 'getVRPPostTypes'), 'vertical-related-posts-options', 'cc_vrp_posttypes_section', $this->cc_vrp_options['checkedPostTypes']);
 
 				// Custom CSS
-				add_settings_field('cc_vrp_customcss', 'Custom CSS', array($this, 'getVRPCustomCSS'), 'vertical-related-posts-options', 'cc_vrp_customcss_section');
+				add_settings_field('cc_vrp_customcss', 'Load Plugin\'s Stylesheet', array($this, 'getVRPCustomCSS'), 'vertical-related-posts-options', 'cc_vrp_customcss_section', $this->cc_vrp_options['loadDefaultCSS']);
 			}
 
 			/**
@@ -204,7 +202,7 @@
 
 			public function setVRPCustomCSS()
 			{
-				// optional
+				?><p>The necessary CSS to customize the look of the related posts</p><?php
 			}
 
 			// Title
@@ -234,19 +232,6 @@
 				<?php
 			}
 
-			// load default stylesheed
-			public function getVRPDefaultStylesheet($options)
-			{
-				?>
-				<div class="onoffswitch">
-					<input type="checkbox" name="loadDefaultCss" class="onoffswitch-checkbox" id="loadDefaultCss" <?php if ($options == "on") echo 'checked' ?>>
-					<label class="onoffswitch-label" for="loadDefaultCss">
-						<div class="onoffswitch-inner"></div>
-						<div class="onoffswitch-switch"></div>
-					</label>
-				</div>
-				<?php
-			}
 
 			// Fill with random posts
 			public function getVRPFillRandom($options)
@@ -292,20 +277,32 @@
 				<?php
 			}
 
-			public function getVRPCustomCSS()
+			// Custom CSS
+			public function getVRPCustomCSS($options)
 			{
 				?>
-				<p>#vertical-related-posts { }</p>
-				<p>#vertical-related-posts #title { }</p>
-				<p>#vertical-related-posts h1 { }</p>
-				<p>#vertical-related-posts p { }</p>
+				<div class="onoffswitch" style="display: inline-block">
+					<input type="checkbox" name="loadDefaultCSS" class="onoffswitch-checkbox" id="loadDefaultCSS" <?php if ($options == 'on') echo 'checked'?>>
+					<label class="onoffswitch-label" for="loadDefaultCSS">
+						<div class="onoffswitch-inner"></div>
+						<div class="onoffswitch-switch"></div>
+					</label>
+				</div>
+
+				<div id="custom-css" <?php if ($this->cc_vrp_options['loadDefaultCSS'] == 'on') echo "style='display: none;'" ?>>
+					<h4>Add this CSS tags to your theme to customize the layout of Vertical Related Posts</h4>
+					<pre>
+	div.cc-vertical-related-posts {}
+	h1.cc-vrp-title {}
+	p.cc-vrp-excerpt {}
+	h1.cc-vrp-article-title {}
+					</pre>
+				</div>
 				<?php
 			}
 
 			/**
-			 * Retrieve options from settings page
-			 * @param  $input store all the settings
-			 * @return all the options set for the plugin
+			 * Validate input and update database
 			 */
 			public function cc_vrp_validate($input)
 			{
@@ -317,52 +314,25 @@
 				endforeach;
 
 				// dump variables into array for later wp_options update
-				$input['relatedPostsTitle'] = mysql_real_escape_string($_POST['relatedPostsTitle']);
+				$input['relatedPostsTitle'] = wp_kses_post($_POST['relatedPostsTitle']);
 				$input['checkedPostTypes'] = $checkedPostTypes;
 				$input['defaultNumberOfPosts'] = $_POST['defaultNumberOfPosts'];
-				$input['loadDefaultCss'] = isset($_POST['loadDefaultCss']) ? 'on' : 'off';
 				$input['fillWithRandomPosts'] = isset($_POST['fillWithRandomPosts']) ? 'on' : 'off';
 				$input['featuredImageSize'] = $_POST['featuredImageSize'];
+				$input['loadDefaultCSS'] = isset($_POST['loadDefaultCSS']) ? 'on' : 'off';
 
 				return $input;
 			}
 
 			/**
-			 * This function renders (displays) our options panel and is the callback used in the admin_menu hook.
-			 *
-			 * Notes:
-			 *  - Notice the class of .wrap which "wraps" all of our content
-			 *  - We're using the options general screen icon @see http://codex.wordpress.org/Function_Reference/screen_icon
-			 *  - We're not using settings_errors() in this case because we do not have any custom error mesages
-			 *      - settings_errors() is called automatically on options panels (@see http://codex.wordpress.org/Function_Reference/settings_errors)
-			 *  - Our HTML form is posting to options.php (wp-admin/options.php)
+			 * Main function to display all settings
 			 */
-			function vertical_related_posts_options()
+			public function vertical_related_posts_options()
 			{
 				?>
 				<div class="wrap">
 					<?php screen_icon('options-general'); ?>
-					<h2 style="color:darkred">VERTICAL RELATED POSTS - UNDER DEVELOPMENT</h2>
-					<?php
-						$taxonomy_names = get_object_taxonomies( 'post' );
-   						echo "<pre>";
-   						print_r( $taxonomy_names);
-   						echo "</pre>";
-					?>
-					<ul>
-						<h2>TODO List</h2>
-						<li> &#10003; Add custom number of posts for every post</li>
-						<li> &#10003; Load default CSS if checked, provide textarea for custom CSS</li>
-						<li> &#10003; If there aren't enought related posts, fill with random ones</li>
-						<li> &#10003; Post specific post-types; if not defined... use global list</li>
-						<li> &#10003; Ask user for feature-image size: thumbnail, medium, large, full</li>
-						<li> &#9745; Add multiple layouts</li>
-						<li> &#9633; Add option for related posts to be displayed on pages, select pages templates</li>
-						<li> &#9633; Add option to save settings on plugin uninstalled/deletions</li>
-						<li> &#9745; </li>
-						<br><li> &#9633; Write documentation</li>
-					</ul>
-					<?php //settings_errors(); This function is already output on all settings/option pages so we don't need to include it here as it results in two error/saved messages. ?>
+					<h2>VERTICAL RELATED POSTS</h2>
 					<div class="vrp-settings">
 						<form method="post" action="options.php">
 							<?php settings_fields('cc_vrp_options'); ?>

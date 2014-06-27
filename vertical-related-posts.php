@@ -1,7 +1,7 @@
 <?php
 	/**
 	 *	Plugin Name: Vertical Related Posts
-	 *	Plugin URI: http://uncover-romania.com/
+	 *	Plugin URI: https://github.com/corneliucirlan/vertical-related-posts
 	 *	Description: Vertical Related Posts created specially for Uncover Romania's website.
 	 *	Author: Corneliu C&icirc;rlan
 	 *	License: GPLv2 or later
@@ -50,8 +50,19 @@
 	}
 
 	// create instances
-	$vrp_admin = new VerticalRelatedPostsAdmin();
-	$vrp_metabox = new VerticalRelatedPostsMetabox($vrp_admin->getSettings());
+	$VRPAdmin = new VerticalRelatedPostsAdmin();
+	$VRPSettings = $VRPAdmin->getSettings();
+	$VRPMetabox = new VerticalRelatedPostsMetabox($VRPSettings);
+
+
+	// Load necessary CSS on selected posts
+	if ($VRPSettings['loadDefaultCSS'] == 'on')
+		add_action('wp_enqueue_scripts', function() {
+			global $VRPSettings;
+			if (in_array(get_post_type(), $VRPSettings['checkedPostTypes']))
+				wp_enqueue_style('cc-vrp-style', VRP_URI.'css/vertical-related-posts.css', array(), VRP_VERSION);
+		});
+
 
 	function displayVerticalRelatedPosts()
 	{
