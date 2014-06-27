@@ -2,7 +2,7 @@
 	/**
 	 *	Plugin Name: Vertical Related Posts
 	 *	Plugin URI: https://github.com/corneliucirlan/vertical-related-posts
-	 *	Description: Vertical Related Posts created specially for Uncover Romania's website.
+	 *	Description: Wordpress plugin for displaying related posts.
 	 *	Author: Corneliu C&icirc;rlan
 	 *	License: GPLv2 or later
 	 *	Version: 1.0.0
