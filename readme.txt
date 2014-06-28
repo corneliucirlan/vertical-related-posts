@@ -55,5 +55,8 @@ the directory of the stable readme.txt, so in this case, \`/tags/4.3/screenshot-
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.1 =
+* Fixed excerpt alignment
+
+= 1.0.0 =
 * Initial release.

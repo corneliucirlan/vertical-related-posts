@@ -26,6 +26,6 @@ h1.cc-vrp-article-title {
 	padding-bottom: .4rem;
 }
 
-p.cc-vrp-excerpt {
-	text-align: justify;
+.cc-vertical-related-posts p {
+	text-align: justify !important;
 }

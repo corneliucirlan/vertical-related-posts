@@ -1,14 +1,4 @@
 <?php
-	/**
-	 *	Plugin Name: Vertical Related Posts
-	 *	Plugin URI: https://github.com/corneliucirlan/vertical-related-posts
-	 *	Description: Wordpress plugin for displaying related posts.
-	 *	Author: Corneliu C&icirc;rlan
-	 *	License: GPLv2 or later
-	 *	Version: 1.0.0
-	 *	Author URI: https://linkedin.com/in/corneliucirlan
-	 */
-	
 
 	if (!class_exists("VerticalRelatedPosts")):
 		class VerticalRelatedPosts
@@ -126,7 +116,7 @@
 						<h1 class='cc-vrp-article-title'><?php the_title() ?></h1>
 						<div><img src="<?php echo $image[0]; ?>"></div>
 					</a>
-					<p class='cc-vrp-excerpt'><?php the_excerpt(); ?></p>
+					<?php the_excerpt(); ?>
 				</article>
 				<?php
 			}
@@ -186,6 +176,5 @@
 			}
 		}
 	endif;
-
 	
 ?>
