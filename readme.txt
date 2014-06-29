@@ -3,7 +3,7 @@ Contributors: corneliucirlan
 Tags: wordpress, related posts, vertical, responsive, mobile friendly, light, white, sidebar, vertical related posts, posts, custom post types, pages
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ Just install, activate and add the code into your template.
 2. Navigate to Plugins->Add New
 3. Search for "Vertical Related Posts" and click install
 4. Activate the plugin
-5. Place \'<?php if (function_exists('displayVerticalRelatedPosts')) displayVerticalRelatedPosts(); ?>\' into your template
+5. Place <code><?php if (function_exists('displayVerticalRelatedPosts')) displayVerticalRelatedPosts(); ?></code> into your template
 
 = Manual instalation =
 
@@ -39,19 +39,18 @@ Just install, activate and add the code into your template.
 2. Extract archive into wp-content/plugins folder
 3. Login into your admin panel and navigate to Plugins
 4. Activate the plugin
-5. Place \'<?php if (function_exists('displayVerticalRelatedPosts')) displayVerticalRelatedPosts(); ?>\' into your template
+5. Place <code><?php if (function_exists('displayVerticalRelatedPosts')) displayVerticalRelatedPosts(); ?></code> into your template
 
 == Frequently Asked Questions ==
 
 = I activated the plugin, why isn't it working ? =
 
-After activation, you have to add the code \'<?php if (function_exists('displayVerticalRelatedPosts')) displayVerticalRelatedPosts(); ?>\' into your template.
+After activation, you have to add the code <code><?php if (function_exists('displayVerticalRelatedPosts')) displayVerticalRelatedPosts(); ?></code> into your template.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, \`/tags/4.3/screenshot-1.png\` (or jpg, jpeg, gif)
-2. This is the second screen shot
+1. Settings Page for Vertical Related Posts
+2. Vertical Related Posts in action (screenshot taken from www.uncover-romania.com)
 
 == Changelog ==
 
