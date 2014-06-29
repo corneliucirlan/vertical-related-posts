@@ -285,8 +285,8 @@
 					<pre>
 	div.cc-vertical-related-posts {}
 	h1.cc-vrp-title {}
-	p.cc-vrp-excerpt {}
 	h1.cc-vrp-article-title {}
+	.cc-vertical-related-posts p {}
 					</pre>
 				</div>
 				<?php
