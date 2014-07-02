@@ -1,5 +1,6 @@
 === Vertical Related Posts ===
 Contributors: corneliucirlan
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=corneliucirlan%40gmail%2ecom&lc=RO&item_name=Corneliu%20Cirlan&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: wordpress, related posts, vertical, responsive, mobile friendly, light, white, sidebar, vertical related posts, posts, custom post types, pages
 Requires at least: 3.3
 Tested up to: 3.9.1
