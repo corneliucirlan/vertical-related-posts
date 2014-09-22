@@ -77,7 +77,7 @@ After activation, you have to add the code <code><?php if (function_exists('disp
 = 1.0.2 - 07.08.2014 =
 * fix: corrected CSS tags on settings page
 
-= 1.0.1 - 07.02.2014=
+= 1.0.1 - 07.02.2014 =
 * fix: fixed excerpt alignment
 
 = 1.0.0 - 06.30.2014 =
