@@ -5,41 +5,41 @@
 	 *	Description: Wordpress plugin for displaying related posts.
 	 *	Author: Corneliu C&icirc;rlan
 	 *	License: GPLv2 or later
-	 *	Version: 1.0.2
+	 *	Version: 1.2
 	 *	Author URI: https://linkedin.com/in/corneliucirlan
 	 */
 	
 
-	@define('VRP_VERSION', '1.0.2'); // Plugin version
+	@define('VRP_VERSION', '1.2'); // Plugin version
 	@define('VRP_FILE', __FILE__); // Reference to this plugin's file
 	@define('VRP_DIR', plugin_dir_path(__FILE__)); // Plugin directory path
 	@define('VRP_URI', trailingslashit(plugins_url('', __FILE__))); // plugin url
 
 	@define('VRP_TITLE', 'RETATED POSTS'); // default title
 	@define('VRP_NUMBER_OF_POSTS', 3); // default number of posts to be displayed
-	@define('VRP_DEFAULT_CSS', 'on'); // load the default stylesheet
+	@define('VRP_DEFAULT_CHECKBOX', 'on'); // load the default stylesheet
 	@define('VRP_FILL_WITH_RANDOM_POSTS', 'on'); // fill with random posts
 	@define('VRP_CHECKED_POST_TYPES', array('post')); // post types enabled by default
 	@define('VRP_FEATURED_SIZE', 'medium'); // featured image default size
 
 
 	/**
-	 * Include Admin class
+	 * INCLUDE ADMIN API
 	 */
-	require_once(VRP_DIR.'/classes/vertical-related-posts-admin.php');
+	require_once(VRP_DIR.'/api/vrp-admin.php');
 
 	/**
-	 * Include Metabox class
+	 * INCLUDE METABOX API
 	 */
-	require_once(VRP_DIR.'/classes/vertical-related-posts-metabox.php');
+	require_once(VRP_DIR.'/api/vrp-metabox.php');
 
 	/**
-	 * Include Public class
+	 * INCLUDE DISPLAY API
 	 */
-	require_once(VRP_DIR.'/classes/vertical-related-posts.php');
+	require_once(VRP_DIR.'/api/vrp-display.php');
 
 	/**
-	 * Create settings button on installed plugins page
+	 * ADD SETTINGS BUTTON ON "PLUGINS" PAGE
 	 */
 	add_filter('plugin_action_links', 'VRPSettingsButton', 10, 2);
 	function VRPSettingsButton($links, $file)
@@ -49,13 +49,13 @@
 	    return $links;
 	}
 
-	// create instances
+	// CREATE INSTANCES
 	$VRPAdmin = new VerticalRelatedPostsAdmin();
 	$VRPSettings = $VRPAdmin->getSettings();
 	$VRPMetabox = new VerticalRelatedPostsMetabox($VRPSettings);
 
 
-	// Load necessary CSS on selected posts
+	// LOAD NECESSARY CSS ON SELECTED POST TYPES
 	if ($VRPSettings['loadDefaultCSS'] == 'on')
 		add_action('wp_enqueue_scripts', function() {
 			global $VRPSettings;
@@ -64,6 +64,9 @@
 		});
 
 
+	/**
+	 * DISPLAY RELATED POSTS
+	 */
 	function displayVerticalRelatedPosts()
 	{
 		$vrp_new = new VerticalRelatedPosts();

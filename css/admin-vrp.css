@@ -45,7 +45,30 @@
     right: 0px; 
 }
 
-
 .vrp-settings input[type="checkbox"] {
-	display: none;
+	display: none !important;
+}
+
+/**
+ * Metabox Layout
+ */
+div#cc-vrp-wrapper {
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    clear: both;
+}
+
+section.cc-vrp-section {
+    margin-top: 5px;
+    clear: both;
+}
+
+div.cc-vrp-label, div.cc-vrp-input {
+    width: 50%;
+    float: left;
+    display: inline-block;
+    line-height: 40px;
+    margin-top: 10px;
+    vertical-align: super;
 }

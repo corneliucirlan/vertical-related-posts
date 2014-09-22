@@ -72,7 +72,10 @@
 				if (!array_key_exists('fillWithRandomPosts', $this->cc_vrp_options)) $default['fillWithRandomPosts'] = VRP_FILL_WITH_RANDOM_POSTS;
 				if (!array_key_exists('checkedPostTypes', $this->cc_vrp_options)) $default['checkedPostTypes'] = VRP_CHECKED_POST_TYPES;
 				if (!array_key_exists('featuredImageSize', $this->cc_vrp_options)) $default['featuredImageSize'] = VRP_FEATURED_SIZE;
-				if (!array_key_exists('loadDefaultCSS', $this->cc_vrp_options) )$default['loadDefaultCSS'] = VRP_DEFAULT_CSS;
+				if (!array_key_exists('loadDefaultCSS', $this->cc_vrp_options)) $default['loadDefaultCSS'] = VRP_DEFAULT_CHECKBOX;
+				if (!array_key_exists('displayTitle', $this->cc_vrp_options)) $default['displayTitle'] = VRP_DEFAULT_CHECKBOX;
+				if (!array_key_exists('displayFeaturedImage', $this->cc_vrp_options)) $default['displayFeaturedImage'] = VRP_DEFAULT_CHECKBOX;
+				if (!array_key_exists('displayExcerpt', $this->cc_vrp_options)) $default['displayExcerpt'] = VRP_DEFAULT_CHECKBOX;
 
 				// update database with
 				update_option('cc_vrp_options', $default);
@@ -92,11 +95,13 @@
 				$default['version'] = VRP_VERSION;
 				$default['relatedPostsTitle'] = VRP_TITLE;
 				$default['defaultNumberOfPosts'] = VRP_NUMBER_OF_POSTS;
-				$default['loadDefaultCss'] = VRP_DEFAULT_CSS;
 				$default['fillWithRandomPosts'] = VRP_FILL_WITH_RANDOM_POSTS;
 				$default['checkedPostTypes'] = VRP_CHECKED_POST_TYPES;
 				$default['featuredImageSize'] = VRP_FEATURED_SIZE;
-				$default['loadDefaultCSS'] = VRP_DEFAULT_CSS;
+				$default['loadDefaultCSS'] = VRP_DEFAULT_CHECKBOX;
+				$default['displayTitle'] = VRP_DEFAULT_CHECKBOX;
+				$default['displayFeaturedImage'] = VRP_DEFAULT_CHECKBOX;
+				$default['displayExcerpt'] = VRP_DEFAULT_CHECKBOX;
 
 				// Store default plugin settings
 				add_option('cc_vrp_options', $default);
@@ -169,9 +174,20 @@
 				// Feature Image Size
 				add_settings_field('cc_vrp_featureimagesize', 'Feature Image Size', array($this, 'getVRPFeatureImageSize'), 'vertical-related-posts-options', 'cc_vrp_general_section', $this->cc_vrp_options['featuredImageSize']);
 
+				// Related posts titles
+				add_settings_field('cc_vrp_displaytitle', 'Display Title', array($this, 'getVRPDisplayTitle'), 'vertical-related-posts-options', 'cc_vrp_general_section', $this->cc_vrp_options['displayTitle']);
+
+				// Related posts featured image
+				add_settings_field('cc_vrp_displayfeaturedimage', 'Display Featured Image', array($this, 'getVRPDisplayFeaturedImage'), 'vertical-related-posts-options', 'cc_vrp_general_section', $this->cc_vrp_options['displayFeaturedImage']);
+
+				// Related posts excerpt
+				add_settings_field('cc_vrp_displayexcerpt', 'Display Excerpt', array($this, 'getVRPDisplayExcerpt'), 'vertical-related-posts-options', 'cc_vrp_general_section', $this->cc_vrp_options['displayExcerpt']);
+
+
 				// Post Types
 				add_settings_field('cc_vrp_posttypes', 'Post Types', array($this, 'getVRPPostTypes'), 'vertical-related-posts-options', 'cc_vrp_posttypes_section', $this->cc_vrp_options['checkedPostTypes']);
 
+				
 				// Custom CSS
 				add_settings_field('cc_vrp_customcss', 'Load Plugin\'s Stylesheet', array($this, 'getVRPCustomCSS'), 'vertical-related-posts-options', 'cc_vrp_customcss_section', $this->cc_vrp_options['loadDefaultCSS']);
 			}
@@ -220,6 +236,48 @@
 					<option value="large" <?php if ($options == 'large') echo 'selected' ?>>Large</option>
 					<option value="full" <?php if ($options == 'full') echo 'selected' ?>>Full</option>
 				</select>
+				<?php
+			}
+
+			// Related posts title
+			public function getVRPDisplayTitle($options)
+			{
+				?>
+				<div class="onoffswitch">
+					<input type="checkbox" name="displayTitle" class="onoffswitch-checkbox" id="displayTitle" <?php if ($options == "on") echo "checked" ?>>
+					<label class="onoffswitch-label" for="displayTitle">
+						<div class="onoffswitch-inner"></div>
+						<div class="onoffswitch-switch"></div>
+					</label>
+				</div>
+				<?php
+			}
+
+			// Related posts title
+			public function getVRPDisplayFeaturedImage($options)
+			{
+				?>
+				<div class="onoffswitch">
+					<input type="checkbox" name="displayFeaturedImage" class="onoffswitch-checkbox" id="displayFeaturedImage" <?php if ($options == "on") echo "checked" ?>>
+					<label class="onoffswitch-label" for="displayFeaturedImage">
+						<div class="onoffswitch-inner"></div>
+						<div class="onoffswitch-switch"></div>
+					</label>
+				</div>
+				<?php
+			}
+
+			// Related posts title
+			public function getVRPDisplayExcerpt($options)
+			{
+				?>
+				<div class="onoffswitch">
+					<input type="checkbox" name="displayExcerpt" class="onoffswitch-checkbox" id="displayExcerpt" <?php if ($options == "on") echo "checked" ?>>
+					<label class="onoffswitch-label" for="displayExcerpt">
+						<div class="onoffswitch-inner"></div>
+						<div class="onoffswitch-switch"></div>
+					</label>
+				</div>
 				<?php
 			}
 
@@ -286,7 +344,7 @@
 	div.cc-vertical-related-posts {}
 	h1.cc-vrp-title {}
 	h1.cc-vrp-article-title {}
-	.cc-vertical-related-posts p {}
+	div.cc-vertical-related-posts p {}
 					</pre>
 				</div>
 				<?php
@@ -311,6 +369,9 @@
 				$input['fillWithRandomPosts'] = isset($_POST['fillWithRandomPosts']) ? 'on' : 'off';
 				$input['featuredImageSize'] = $_POST['featuredImageSize'];
 				$input['loadDefaultCSS'] = isset($_POST['loadDefaultCSS']) ? 'on' : 'off';
+				$input['displayTitle'] = isset($_POST['displayTitle']) ? 'on' : 'off';
+				$input['displayFeaturedImage'] = isset($_POST['displayFeaturedImage']) ? 'on' : 'off';
+				$input['displayExcerpt'] = isset($_POST['displayExcerpt']) ? 'on' : 'off';
 
 				return $input;
 			}
