@@ -109,12 +109,13 @@
 			private function displayArticle()
 			{
 				global $post;
-				$image = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ), $this->cc_vrp_options['featuredImageSize']);
+				$image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), $this->cc_vrp_options['featuredImageSize']);
+				$alt = get_post_meta(get_post_thumbnail_id($post->id), '_wp_attachment_image_alt', true);
 				?>
 				<article>
 					<a href="<?php the_permalink() ?>" title="<?php the_title() ?>" rel="bookmark">
-						<?php if ($this->cc_vrp_options['displayTitle'] == 'on'): ?><h1 class='cc-vrp-article-title'><?php the_title() ?></h1><?php endif; ?>
-						<?php if ($this->cc_vrp_options['displayFeaturedImage'] == 'on'): ?><div><img src="<?php echo $image[0]; ?>"></div><?php endif; ?>
+						<?php if ($this->cc_vrp_options['displayTitle'] == 'on'): ?><h3 class='cc-vrp-article-title'><?php the_title() ?></h3><?php endif; ?>
+						<?php if ($this->cc_vrp_options['displayFeaturedImage'] == 'on'): ?><div><img src="<?php echo $image[0] ?>" alt="<?php echo $alt ?>" /></div><?php endif; ?>
 					</a>
 					<?php if ($this->cc_vrp_options['displayExcerpt'] == 'on') the_excerpt(); ?>
 				</article>
@@ -153,7 +154,7 @@
 				if ($disableVRPOnPage == "off"):
 					?>
 					<div class="cc-vertical-related-posts">
-						<h1 class="cc-vrp-title"><?php echo $this->cc_vrp_options['relatedPostsTitle'] ?></h1>
+						<h2 class="cc-vrp-title"><?php echo $this->cc_vrp_options['relatedPostsTitle'] ?></h2>
 						<?php
 						// Display the Related Posts
 						if ($the_query->have_posts()): 

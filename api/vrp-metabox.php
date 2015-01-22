@@ -169,7 +169,7 @@
 			   	update_post_meta($post_id, 'disableVRPOnPage', $display);
 
 			    // Get number of posts to display
-			    if (isset($_POST['numberOfDisplayedPosts'])) update_post_meta($post_id, 'numberOfDisplayedPosts', wp_kses( $_POST['numberOfDisplayedPosts']));
+			    if (isset($_POST['numberOfDisplayedPosts'])) update_post_meta($post_id, 'numberOfDisplayedPosts', esc_attr($_POST['numberOfDisplayedPosts']));
 			    	else update_post_meta($post_id, 'numberOfDisplayedPosts', $this->cc_vrp_options['defaultNumberOfPosts']);
 			
 				// verify if checked to use custom post types for current article

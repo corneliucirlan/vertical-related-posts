@@ -5,12 +5,12 @@
 	 *	Description: Wordpress plugin for displaying related posts.
 	 *	Author: Corneliu C&icirc;rlan
 	 *	License: GPLv2 or later
-	 *	Version: 1.2
+	 *	Version: 1.2.5
 	 *	Author URI: https://linkedin.com/in/corneliucirlan
 	 */
 	
 
-	@define('VRP_VERSION', '1.2'); // Plugin version
+	@define('VRP_VERSION', '1.2.5'); // Plugin version
 	@define('VRP_FILE', __FILE__); // Reference to this plugin's file
 	@define('VRP_DIR', plugin_dir_path(__FILE__)); // Plugin directory path
 	@define('VRP_URI', trailingslashit(plugins_url('', __FILE__))); // plugin url

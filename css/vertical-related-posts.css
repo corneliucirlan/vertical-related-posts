@@ -4,7 +4,7 @@ div.cc-vertical-related-posts {
 	border-top: 1px solid #ddd;
 }
 
-h1.cc-vrp-title {
+h2.cc-vrp-title {
 	font-size: 2.4rem;
 	color: #2777a1;
 	font-weight: normal;
@@ -12,7 +12,7 @@ h1.cc-vrp-title {
 	padding-bottom: 10px
 }
 
-h1.cc-vrp-article-title {
+h3.cc-vrp-article-title {
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: left;
 	font-size: 19px !important;
@@ -26,6 +26,6 @@ h1.cc-vrp-article-title {
 	padding-bottom: .4rem;
 }
 
-.cc-vertical-related-posts p {
+div.cc-vertical-related-posts p {
 	text-align: justify !important;
 }
